@@ -1,0 +1,30 @@
+{
+  "name": "application",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "package": "electron-packager . my-desktop-app --platform=win32 --arch=x64 --icon=C:/Users/Administrator/Music/application/icon.ico --out=dist"
+  },
+  "build": {
+    "appId": "com.example.myapp",
+    "productName": "MyApp",
+    "win": {
+      "target": "nsis",
+      "icon": "C:/Users/Administrator/Music/application/icon.ico"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "C:/Users/Administrator/Music/application/icon.ico"
+    }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "electron": "^22.3.27",
+    "electron-builder": "^22.14.13",
+    "electron-packager": "^14.0.0"
+  }
+}

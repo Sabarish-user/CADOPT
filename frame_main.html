@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Frame</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="javascript/utils.js"></script>
+    <script src="javascript/profile.js"></script>
+    <script src="javascript/tree.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        #container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        #content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            z-index: 1;
+        }
+
+        #tabsFrameContainer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            z-index: 1000;
+        }
+
+        #tabsFrame {
+            width: 300px;
+            height: 100%;
+            border: none;
+            position: absolute;
+            left: -300px;
+            transition: left 0.3s ease-in-out;
+            background-color: rgba(7, 197, 250, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        #tabsFrame.visible {
+            left: 0;
+        }
+
+        #toggleArrow {
+            position: absolute;
+            top: 50%;
+            right: -20px;
+            width: 40px;
+            height: 60px;
+            background: linear-gradient(135deg, #6e8ffb00, #5d9ffc00);
+            color: rgba(255, 255, 255, 0);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 600;
+            z-index: 1001;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        #toggleArrow:hover {
+            background: linear-gradient(135deg, #5d9ffc00, #6e8ffb00);
+            width: 45px;
+        }
+
+        /* Button Menu Styles */
+        .button-menu {
+            position: fixed;
+            top: 20px;
+            right: 50px;
+            z-index: 1002;
+        }
+
+        .menu-button {
+            width: 50px;
+            height: 50px;
+            border-radius: 15px;
+            background: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            position: absolute;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .menu-button:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .menu-button:not(#mainMenuButton) {
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.4s ease, opacity 0.3s ease;
+}
+
+
+        #mainMenuButton {
+            background: linear-gradient(135deg, #6e8efb, #5d9efc);
+            color: white;
+            z-index: 1003;
+        }
+
+        #saveBookmarkIcon {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+        }
+
+        #showBookmarksIcon {
+            background: linear-gradient(135deg, #20bf55, #01baef);
+            color: white;
+        }
+
+        #backButton {
+            background: linear-gradient(135deg, #ffd93d, #ff9f1c);
+            color: white;
+        }
+
+        #infoButton {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: white;
+        }
+
+        .button-menu:hover #saveBookmarkIcon {
+            transform: translateX(-160px) rotate(360deg);
+        }
+
+        .button-menu:hover #showBookmarksIcon {
+            transform: translateX(-80px) rotate(360deg);
+        }
+
+        .button-menu:hover #backButton {
+            transform: translateX(-240px) rotate(360deg);
+        }
+
+        .button-menu:hover #infoButton {
+            transform: translateX(-320px) rotate(360deg);
+        }
+
+        /* Bookmark List Styles */
+        #bookmarkList {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: white;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            display: none;
+            z-index: 1002;
+            max-width: 300px;
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        #bookmarkList::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #bookmarkList::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        #bookmarkList::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        #bookmarkList a {
+            display: block;
+            padding: 12px 15px;
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            border-radius: 8px;
+            margin: 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        #bookmarkList a:hover {
+            background: linear-gradient(135deg, #6e8efb, #5d9efc);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        #bookmarkList div {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px;
+        }
+
+        #bookmarkList button {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+        }
+
+        #bookmarkList button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 2px 10px rgba(255,107,107,0.3);
+        }
+
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(3px);
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg" id="container">
+        <iframe id="content" name="content" src="PLM-Product.html" title="Content"></iframe>
+        <div id="tabsFrameContainer">
+            <iframe id="tabsFrame" src="frame_tabs.html" title="Tabs Frame"></iframe>
+            <div id="toggleArrow">&lt;</div>
+        </div>
+        
+        <!-- Button Menu with Icons -->
+        <div class="button-menu">
+            <button id="mainMenuButton" class="menu-button" title="Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <button id="saveBookmarkIcon" class="menu-button" title="Save Bookmark">
+                <i class="fas fa-bookmark"></i>
+            </button>
+            <button id="showBookmarksIcon" class="menu-button" title="Show Bookmarks">
+                <i class="fas fa-list"></i>
+            </button>
+            <button id="backButton" class="menu-button" title="Go Back">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <button id="infoButton" class="menu-button" title="Info">
+                <i class="fas fa-info"></i>
+            </button>
+        </div>
+    </div>
+    <div id="overlay"></div>
+    <div id="bookmarkList"></div>
+
+    <script>
+        window.onload = function() {
+            // Sidebar and Tabs Frame functionality
+            const tabsFrame = document.getElementById('tabsFrame');
+            const toggleArrow = document.getElementById('toggleArrow');
+            const overlay = document.getElementById('overlay');
+            let isVisible = false;
+            let hideTimeout;
+
+            function showTabsFrame() {
+                isVisible = true;
+                tabsFrame.classList.add('visible');
+                toggleArrow.textContent = '>';
+                overlay.style.display = 'block';
+                startHideTimer();
+            }
+
+            function hideTabsFrame() {
+                isVisible = false;
+                tabsFrame.classList.remove('visible');
+                toggleArrow.textContent = '<';
+                overlay.style.display = 'none';
+                clearTimeout(hideTimeout);
+            }
+
+            function startHideTimer() {
+                clearTimeout(hideTimeout);
+                hideTimeout = setTimeout(hideTabsFrame, 5000);
+            }
+
+            toggleArrow.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (isVisible) {
+                    hideTabsFrame();
+                } else {
+                    showTabsFrame();
+                }
+            });
+
+            overlay.addEventListener('click', hideTabsFrame);
+
+            // Bookmark functionality
+            const saveBookmarkIcon = document.getElementById('saveBookmarkIcon');
+            const showBookmarksIcon = document.getElementById('showBookmarksIcon');
+            const bookmarkList = document.getElementById('bookmarkList');
+            const bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
+
+            saveBookmarkIcon.onclick = function() {
+                const contentFrame = document.getElementById('content');
+                const currentUrl = contentFrame.contentWindow.location.href;
+                const title = contentFrame.contentWindow.document.title || 'Untitled';
+
+                if (!bookmarks.some(b => b.url === currentUrl)) {
+                    bookmarks.push({ url: currentUrl, title });
+                    localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+                    alert('Bookmark saved!');
+                } else {
+                    alert('This page is already bookmarked.');
+                }
+            };
+
+            showBookmarksIcon.onclick = function() {
+                if (bookmarkList.style.display === 'block') {
+                    bookmarkList.style.display = 'none';
+                } else {
+                    updateBookmarkList();
+                    bookmarkList.style.display = 'block';
+                }
+            };
+
+            // Function to update and save the bookmark list
+            function updateBookmarkList() {
+                bookmarkList.innerHTML = '';
+                if (bookmarks.length === 0) {
+                    const emptyMessage = document.createElement('div');
+                    emptyMessage.textContent = 'No bookmarks yet!';
+                    emptyMessage.style.padding = '10px';
+                    emptyMessage.style.color = '#666';
+                    bookmarkList.appendChild(emptyMessage);
+                } else {
+                    bookmarks.forEach((bookmark, index) => {
+                        const link = document.createElement('a');
+                        link.href = bookmark.url;
+                        link.textContent = bookmark.title;
+                        link.target = 'content';
+
+                        // Add a delete button
+                        const deleteBtn = document.createElement('button');
+                        deleteBtn.textContent = '🗑️';
+                        deleteBtn.style.marginLeft = '10px';
+                        deleteBtn.style.padding = '2px 5px';
+                        deleteBtn.style.border = 'none';
+                        deleteBtn.style.background = 'none';
+                        deleteBtn.style.color = '#fff';
+                        deleteBtn.style.cursor = 'pointer';
+                        deleteBtn.style.borderRadius = '3px';
+
+                        // Delete bookmark on button click
+                        deleteBtn.addEventListener('click', function () {
+                            // Remove the bookmark from the array
+                            bookmarks.splice(index, 1);
+
+                            // Save the updated bookmark list in localStorage
+                            localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+
+                            // Refresh the list of bookmarks after deletion
+                            updateBookmarkList();
+                        });
+
+                        // Append the link and delete button to the list item
+                        const listItem = document.createElement('div');
+                        listItem.appendChild(link);
+                        listItem.appendChild(deleteBtn);
+                        bookmarkList.appendChild(listItem);
+                    });
+                }
+            }
+
+            // Close bookmark list if clicked outside
+            document.onclick = function(event) {
+                if (event.target !== showBookmarksIcon && event.target !== bookmarkList) {
+                    bookmarkList.style.display = 'none';
+                }
+            };
+
+            // Back button functionality
+            const backButton = document.getElementById('backButton');
+            
+            backButton.onclick = function() {
+                const contentFrame = document.getElementById('content');
+                const contentWindow = contentFrame.contentWindow;
+
+                // Check if the iframe has a history to go back to
+                if (contentWindow.history.length > 1) {
+                    contentWindow.history.back();
+                } else {
+                    alert("No previous page in history.");
+                }
+            };
+
+            // Info button functionality to open author.html
+            const infoButton = document.getElementById('infoButton');
+            infoButton.onclick = function() {
+                const contentFrame = document.getElementById('content');
+                contentFrame.src = 'cadoptinfo.html';  // Update this with the path to your author.html
+            };
+        };
+
+        document.addEventListener("DOMContentLoaded", function () {
+    const mainMenuButton = document.getElementById("mainMenuButton");
+    const buttons = document.querySelectorAll(".menu-button:not(#mainMenuButton)");
+    let menuVisible = false;
+
+    mainMenuButton.addEventListener("click", function () {
+        menuVisible = !menuVisible;
+
+        buttons.forEach((button, index) => {
+            if (menuVisible) {
+                button.style.transform = `translateX(-${80 * (index + 1)}px) rotate(360deg)`;
+                button.style.opacity = "1";
+                button.style.pointerEvents = "auto";
+            } else {
+                button.style.transform = "translateX(0) rotate(0deg)";
+                button.style.opacity = "0";
+                button.style.pointerEvents = "none";
+            }
+        });
+    });
+});
+
+    </script>
+</body>
+</html>

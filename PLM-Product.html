@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CADOpt - SLM Products</title>
+    <style>
+        .card {
+            width: 250px;
+            margin: 20px;
+            border: 5px solid #09d4f8;
+            background-color: #b0ababa8;
+            font-family: century gothic, sans-serif;
+            overflow: hidden;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease-in-out forwards;
+            background: rgba(16, 12, 2, 0.858);
+            position: relative;
+            max-width: 250px;
+            height: 350px;
+            border-radius: 5px;
+            padding: 1rem;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            gap: 7.5px;
+            transition: 0.5s ease;
+            color: white;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('../images/PLM.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .main-title {
+            text-align: center;
+            font-family: century gothic, sans-serif;
+            margin: 40px 0 20px;
+        }
+
+        .main-title h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            font-family: century gothic, sans-serif;
+            color: #d2d2d2;
+        }
+
+        .main-title p {
+            font-size: 1.5rem;
+            font-family: century gothic, sans-serif;
+            margin: 10px 0;
+            color: #d2d2d2;
+        }
+
+        .products-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 40px auto;
+        }
+
+        .product-card {
+            width: 250px;
+            margin: 20px;
+            border: 5px solid #09d4f8;
+            background-color: #b0ababa8;
+            font-family: century gothic, sans-serif;
+            overflow: hidden;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease-in-out forwards;
+        }
+
+        .product-card:nth-child(1) { animation-delay: 0.3s; }
+        .product-card:nth-child(2) { animation-delay: 0.6s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .product-card a {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 15px;
+        }
+
+        .product-info h3 {
+            margin-top: 0;
+            color: #000000;
+        }
+
+        .pdf-button {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .pdf-button a {
+            background-color: aqua;
+            color: black;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-title">
+        <h1>PLM</h1>
+        <p>Products</p>
+    </div>
+
+    <div class="products-grid">
+        <div class="product-card">
+            <a href="http://slm.cadopt.com/Windchill/app/#ptc1/tcomp/infoPage?ContainerOid=OR%3Awt.pdmlink.PDMLinkProduct%3A37076883&oid=VR%3Awt.doc.WTDocument%3A39632403&u8=1">
+                <div class="product-image">
+                    <img src="PLM PRODUCT/graphics/OIP.jpg" alt="Server Upgrades & Server Rehost">
+                </div>
+                <div class="product-info">
+                    <h3>Windchill</h3>
+                </div>
+            </a>
+            <div class="pdf-button">
+                <a href="fetch_pdf.php" target="_blank">Open PDF</a>
+            </div>
+        </div>
+        <div class="product-card">
+            <a href="http://slm.cadopt.com/Windchill/app/#ptc1/tcomp/infoPage?ContainerOid=OR%3Awt.pdmlink.PDMLinkProduct%3A37076883&oid=VR%3Awt.doc.WTDocument%3A39632403&u8=1">
+                <div class="product-image">
+                    <img src="http://slm.cadopt.com/Windchill/app/#ptc1/tcomp/infoPage?ContainerOid=OR%3Awt.pdmlink.PDMLinkProduct%3A37076883&oid=VR%3Awt.doc.WTDocument%3A39632403&u8=1" alt="PLM Windchill Implementation & Server Rehost">
+                </div>
+                <div class="product-info">
+                    <h3>Windchill modules</h3>
+                </div>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

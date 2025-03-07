@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CADOpt Technologies</title>
+    <script src="javascript/utils.js"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+            font-family: "Arial", sans-serif;
+            overflow: hidden;
+        }
+
+        #myVideo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            z-index: -1;
+            filter: brightness(70%);
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        #content {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        #main {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 100%;
+            height: calc(100% - 60px);
+        }
+
+        #main iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 10px;
+            right: 160px;
+        }
+
+        .dropbtn {
+            background: #115f979c;
+            color: white;
+            padding: 12px 18px;
+            font-size: 16px;
+            border: 1px solid #ffffff;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: transform 0.2s ease, background 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 30px;
+            right: 0;
+            background: #115f979c;
+            border: 5px solid #ffffff;
+            min-width: 140px;
+            box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+            border-radius: 8px;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a, .logoutBtn {
+            color: rgb(255, 255, 255);
+            padding: 12px;
+            text-decoration: none;
+            display: block;
+            font-size: 14px;
+            text-align: left;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .logoutBtn {
+            background-color: rgb(255, 0, 0);
+            border-radius: 3px;
+            text-align: center;
+        }
+
+        .extra-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            background: #115f979c;
+            color: white;
+            padding: 12px 18px;
+            font-size: 16px;
+            border: 1px solid #ffffff;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: transform 0.2s ease, background 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <video autoplay muted loop playsinline id="myVideo">
+        <source src="images/background.mp4" type="video/mp4">
+    </video>
+    
+    <div id="content">
+        <div id="banner">
+            <iframe src="banner.html" style="border: none; width: 100%; height: 100%;"></iframe>
+        </div>
+
+        <div class="dropdown">
+            <button class="dropbtn">Menu</button>
+            <div class="dropdown-content">
+                <a href="Gallary/Gallery.html">Gallery</a>
+                <button class="logoutBtn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+
+        <a href="CADOPT/LINE/CADOPT.html" class="extra-btn">About us</a>
+
+        <!-- Image with link to HTML page, positioned at the top-left corner -->
+        <a href="default.htm">
+            <img src="images/login.png" alt="Description of image" style="width: 90px; height: auto; position: absolute; top: 10px; left: 0;">
+        </a>
+
+        <div id="main">
+            <iframe scrolling="no" src="frame_main.html"></iframe>
+        </div>
+    </div>
+
+    <script>
+        function logout() {
+            window.location.href = "login.html";
+        }
+
+        function extraFunction() {
+            alert("Extra button clicked!");
+        }
+    </script>
+</body>
+</html>
