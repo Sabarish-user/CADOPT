@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "name": "application",
   "version": "1.0.0",
   "main": "main.js",
@@ -17,14 +18,29 @@
       "target": "dmg",
       "icon": "C:/Users/Administrator/Music/application/icon.ico"
     }
+=======
+  "name": "openai-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+>>>>>>> 8e8692a (Initial commit)
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
+<<<<<<< HEAD
   "devDependencies": {
     "electron": "^22.3.27",
     "electron-builder": "^22.14.13",
     "electron-packager": "^14.0.0"
+=======
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "node-fetch": "^3.3.2"
+>>>>>>> 8e8692a (Initial commit)
   }
 }
